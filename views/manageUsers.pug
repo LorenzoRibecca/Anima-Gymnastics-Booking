@@ -1,0 +1,35 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me', 'Settings', 'settings')
+                    +navItem('/my-classes', 'My classes', 'briefcase')
+                    +navItem('/billing', 'Billing', 'credit-card')
+
+                - if (user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('/add-a-class', 'Add a class', 'star')
+                            +navItem('/manage-classes', 'Manage classes', 'map')                            
+                            +navItem('/manage-users', 'Manage users', 'user', true)
+            .grid-container
+                div.grid-item-one.grid-header Name
+                div.grid-item-two.grid-header Email
+                div.grid-item-three.grid-header Phone number
+                div.grid-item-four.grid-header Role
+                each user in users   
+                    div.grid-item-one= user.name
+                    div.grid-item-two= user.email
+                    div.grid-item-three= `+44${user.phone}`
+                    div.grid-item-four= user.role
+                            

@@ -1,0 +1,72 @@
+extends base
+
+block append head
+
+mixin overviewBox(label, text, icon)
+    .overview-box__detail
+        svg.overview-box__icon
+            use(xlink:href=`/img/icons.svg#icon-${icon}`)
+        span.overview-box__label= label
+        span.overview-box__text= text
+
+
+block content
+
+    section.section-header
+        .header__hero
+            .header__hero-overlay &nbsp;
+            img.header__hero-img(src=`/img/type/term/${classes.imageTerm}`, alt=`${classes.name}`)
+
+        .heading-box
+            h1.heading-primary
+                span= `${classes.name} ${classes.day} class`
+            .heading-box__group
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-clock')
+                    -const time = classes.time
+                    each t in time
+                        span.heading-box__text= t
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-map-pin')
+                    span.heading-box__text= `${classes.venue}`
+
+    section.section-description
+        .overview-box
+            div
+            .overview-box__group
+                h2.heading-secondary.ma-bt-lg Quick facts
+
+                - const date =classes.startDate.toLocaleString('en-us', {day: 'numeric', month: 'long', year: 'numeric'})
+                +overviewBox('First date', date, 'calendar')
+                +overviewBox('term', classes.term, 'trending-up')
+                +overviewBox('Participants', `${classes.maxCapacity} spaces left`, 'user')
+                +overviewBox('Price', `£${classes.fullPrice}`, 'star')
+
+        .description-box
+            h2.heading-secondary.ma-bt-lg= `About the ${classes.name} class`
+            -const paragraphs = classes.description.split('\n');
+            each p in paragraphs
+                p.description__text= p
+
+    section.section-pictures
+        each img, i in classes.imageClass
+            .picture-box
+                img.picture-box__img(src=`/img/type/venue/${img}`, alt=`The Park Camper Tour ${i + 1}`, class =`picture-box__img--${i + 1}`)
+
+
+    section.section-cta
+        .cta
+            .cta__img.cta__img--logo
+                img(src='/img/logo-white.png', alt='Natours logo')
+            img.cta__img.cta__img--1(src=`/img/type/venue/${classes.imageClass[1]}`, alt='')
+            img.cta__img.cta__img--2(src=`/img/type/venue/${classes.imageClass[2]}`, alt='')
+            .cta__content
+                h2.heading-secondary What are you waiting for?
+                p.cta__text= `${classes.duration / 60} hour. 1 adventure. Infinite memories. Make it yours today!`
+
+                if user
+                    button.btn.btn--blue.span-all-rows#book-tour(data-tour-id=`${classes.id}`) Book tour now!
+                else   
+                    a.btn.btn--blue.span-all-rows(href='/login') Log in to book tour

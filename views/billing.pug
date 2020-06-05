@@ -1,0 +1,44 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me', 'Settings', 'settings')
+                    +navItem('/my-classes', 'My classes', 'briefcase')
+                    +navItem('/billing', 'Billing', 'credit-card', true)
+
+                - if (user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('/add-a-class', 'Add a class', 'star')
+                            +navItem('/manage-classes', 'Manage classes', 'map')                            
+                            +navItem('/manage-users', 'Manage users', 'user')
+
+            .user-view__content
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md Your billing settings
+                    form.form.form-user-data
+                        .form__group
+                            label.form__label(for='name') Name on card
+                            input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+                        .form__group.ma-bt-md
+                            label.form__label(for='cc') Credit card number
+                            input#cc.form__input(type='tel', input='numeric', pattern='[0-9\s]{13,19}', autocomplete='cc-number', max='19', placeholder='xxxx xxxx xxxx', required name='card')
+                        .form__group.ma-bt-md
+                            label.form__label(for='expiry date') Expiry date
+                            input#expiry.form__input(type='month', required name='expiry')
+                        .form__group.ma-bt-md
+                            label.form__label(for='cvc') CVC
+                            input#cvc.form__input(type='number', pattern='[0-9]{3}', autocomplete='cvc', min='3', max='3', placeholder='CVC', required name='card')
+                        .form__group.right
+                            button.btn.btn--small.btn--blue Save settings

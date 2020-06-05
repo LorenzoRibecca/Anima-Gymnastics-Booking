@@ -1,0 +1,42 @@
+extends base
+
+block content
+    main.main
+        .card-container
+            each classes in classess
+                .card
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`img/type/${classes.imageCover}`, alt=`${classes.name}`)
+                        h3.heading-tertirary
+                            span= classes.name
+
+                    .card__details
+                        h4.card__sub-heading= `${classes.day} ${classes.time}`
+                        p.card__text= classes.description
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-map-pin')
+                            span= classes.venue
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-calendar')
+                            span= classes.startDate.toLocaleString('en-us', {day: 'numeric', month: 'long', year: 'numeric'})
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-flag')
+                            span= `${classes.term} term`
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-user')
+                            span= `${classes.age} years old`
+
+                    .card__footer
+                        p
+                            span.card__footer-value= `£${classes.fullPrice} `
+                            span.card__footer-text per child
+                        p.card__ratings
+                            span.card__footer-value= `£${classes.classPrice} `
+                            span.card__footer-text per class
+                        a.btn.btn--blue.btn--small(href=`/class/${classes.slug}`) Details

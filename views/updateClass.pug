@@ -1,0 +1,93 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`/img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me', 'Settings', 'settings')
+                    +navItem('/my-classes', 'My classes', 'briefcase')
+                    +navItem('/billing', 'Billing', 'credit-card')
+
+                - if (user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('/add-a-class', 'Add a class', 'star')
+                            +navItem('/manage-classes', 'Manage classes', 'map', true)                            
+                            +navItem('/manage-users', 'Manage users', 'user')
+
+
+            .updateClass-form
+                h2.heading-secondary.ma-bt-lg Update class
+                form.form.form-update-class
+                    .form__group
+                        button.btn.btn--blue.btn--delete Delete class
+                    .form__group
+                        label.form__label(for='name') Class name
+                        select#name.form__input(name='name')
+                            option beginner
+                            option intermediate
+                            option advanced
+                            option preschool
+                            option floor and vault
+                    .form__group
+                        label.form__label(for='venue') Venue
+                        select#venue.form__input(name='venue')
+                            option Anima Gymnastics Club
+                    .form__group
+                        label.form__label(for='term') Term
+                        select#term.form__input(name='term')
+                            option Autumn
+                            option Winter
+                            option Spring
+                            option Summer
+                    .form__group
+                        label.form__label(for='day') Day of the week
+                        select#day.form__input(name='day')
+                            option Monday
+                            option Tuesday
+                            option Wednesday
+                            option Thursday
+                            option Friday
+                            option Saturday
+                            option Sunday
+                    .form__group
+                        label.form__label(for='time') Start time
+                        input#time.form__input(type='time')
+                        label.form__label(for='time1') End time
+                        input#time1.form__input(type='time')
+                    .form__group
+                        label.form__label(for='duration') Duration (in minutes)
+                        input#duration.form__input(type='number')
+                    .form__group
+                        label.form__label(for='startDate') Start date
+                        input#startDate.form__input(type='date')
+                    .form__group
+                        label.form__label(for='endDate') End date
+                        input#endDate.form__input(type='date')
+                    .form__group
+                        label.form__label(for='age') Age range (between 3 and 16)
+                        input#age.form__input(type='number', name='age', placeholder='5')
+                        input#age1.form__input(type='number', name='age', placeholder='11')
+                    .form__group
+                        label.form__label(for='maxCapacity') Max capacity
+                        input#maxCapacity.form__input(type='number', placeholder='24')
+                    .form__group
+                        label.form__label(for='description') Description
+                        input#description.form__input(type='text', placeholder='description')
+                    .form__group
+                        label.form__label(for='fullPrice') Full price
+                        input#fullPrice.form__input(type='number', placeholder='70')
+                    .form__group.ma-bt-md
+                        label.form__label(for='classPrice') Each class price
+                        input#classPrice.form__input(type='number', placeholder='10')
+                    .form__group
+                        button.btn.btn--blue Update class

@@ -1,0 +1,57 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me', 'Settings', 'settings')
+                    +navItem('/my-classes', 'My classes', 'briefcase')
+                    +navItem('/billing', 'Billing', 'credit-card')
+
+                - if (user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('/add-a-class', 'Add a class', 'star')
+                            +navItem('/manage-classes', 'Manage classes', 'map', true)                            
+                            +navItem('/manage-users', 'Manage users', 'user')
+
+            .card-container-acc
+                each classes in classess
+                    .card
+                        .card__header
+                            .card__picture
+                                .card__picture-overlay &nbsp;
+                                img.card__picture-img(src=`img/type/${classes.imageCover}`, alt=`${classes.name}`)
+                            h3.heading-tertirary
+                                span= classes.name
+
+                        .card__details
+                            h4.card__sub-heading= `${classes.day} ${classes.time}`
+                            p.card__text= classes.description
+                            .card__data
+                                svg.card__icon
+                                    use(xlink:href='/img/icons.svg#icon-map-pin')
+                                span= classes.venue
+                            .card__data
+                                svg.card__icon
+                                    use(xlink:href='/img/icons.svg#icon-calendar')
+                                span= classes.startDate.toLocaleString('en-us', {day: 'numeric', month: 'long', year: 'numeric'})
+                            .card__data
+                                svg.card__icon
+                                    use(xlink:href='/img/icons.svg#icon-flag')
+                                span= `${classes.term} term`
+                            .card__data
+                                svg.card__icon
+                                    use(xlink:href='/img/icons.svg#icon-user')
+                                span= `${classes.age} years old`
+
+                        .card__footer
+                            a.btn.btn--blue.btn--small(href=`/manage-classes/${classes.id}`) Update

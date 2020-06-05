@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Beginners",
+    "venue": "",
+    "duration": 60,
+    "description": "You will learn the basics and fundamentals of gymnastics",
+    "image": ""
+  },
+  {
+    "name": "Intermediate",
+    "venue": "",
+    "duration": 90,
+    "description": "Your child will progress the basics and fundamentals of gymnastics they learnt from the beginners class.",
+    "image": ""
+  },
+  {
+    "name": "Advanced",
+    "venue": "",
+    "duration": 120,
+    "description": "Your child will take everything that they have learnt up until now to learn more advanced skills in gymnastics.",
+    "image": ""
+  },
+  {
+    "name": "Preschool",
+    "venue": "",
+    "duration": 45,
+    "description": "You will learn the basics and fundamentals of gymnastics",
+    "image": ""
+  },
+  {
+    "name": "Floor and Vault",
+    "venue": "",
+    "duration": 240,
+    "description": "Competitive Squad",
+    "image": ""
+  }
+]
